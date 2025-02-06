@@ -7,8 +7,16 @@ using System.Windows.Controls;
 
 namespace WpfApp1.DataFilesApp
 {
+    /// <summary>
+    /// Класс работы со страницами 
+    /// </summary>
     internal class FrameApp
     {
+        /// <summary>
+        /// Логика взаимодействия между страницами
+        /// </summary>
         public static Frame frmObj;
     }
+  
+
 }

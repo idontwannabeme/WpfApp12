@@ -64,7 +64,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataFilesApp\Discipline.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataFilesApp\FormTime.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataFilesApp\FrameApp.cs" />
+    <Compile Include="DataFilesApp\Journal.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataFilesApp\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -80,21 +89,48 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DataFilesApp\NameGroup.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataFilesApp\OdbConnectHelper.cs" />
     <Compile Include="DataFilesApp\Role.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataFilesApp\Special.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataFilesApp\Student.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="DataFilesApp\sysdiagrams.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataFilesApp\Teacher.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataFilesApp\User.cs">
       <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataFilesApp\YearAdd.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Teacher\PageAddEvluation.xaml.cs">
+      <DependentUpon>PageAddEvluation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Teacher\PageAddStudent.xaml.cs">
+      <DependentUpon>PageAddStudent.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\PageMain\PageLogin.xaml.cs">
       <DependentUpon>PageLogin.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\PageMain\PageRegistration.xaml.cs">
       <DependentUpon>PageRegistration.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\PageMain\PageStudent.xaml.cs">
+      <DependentUpon>PageStudent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\PageMain\PageTeacher.xaml.cs">
+      <DependentUpon>PageTeacher.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -108,11 +144,27 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Teacher\PageAddEvluation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Teacher\PageAddStudent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\PageMain\PageLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\PageMain\PageRegistration.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\PageMain\PageStudent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\PageMain\PageTeacher.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -13,22 +13,19 @@
         </Grid.RowDefinitions>
         <!--Шапка проекта-->
         <StackPanel
-Background = "LightSeaGreen" Grid.Row="0" />
+            Background = "LightSeaGreen" Grid.Row="0" />
 
         <StackPanel
-Orientation="Horizontal"
-HorizontalAlignment="Center" Grid.Row="0" >
+            Orientation="Horizontal"
+            HorizontalAlignment="Center" Grid.Row="0" >
             <Image Source="/Resources/logo.png" />
-
-
-
-
+            
             <TextBlock
-FontSize="18pt"
-FontWeight="Bold"
-Margin="10"
-VerticalAlignment="Center"
-Text="{Binding ElementName=FrmMain, Path=Content.Title}" />
+            FontSize="18pt"
+            FontWeight="Bold"
+            Margin="10"
+            VerticalAlignment="Center"
+            Text="{Binding ElementName=FrmMain, Path=Content.Title}" />
         </StackPanel>
 
         <!--Тело проекта-->

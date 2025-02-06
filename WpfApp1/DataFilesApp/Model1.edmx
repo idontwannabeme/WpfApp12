@@ -4,13 +4,62 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище AppWpfNetk33Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище AppWpfNetk33Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Discipline">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FormTime">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Journal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdStudent" Type="int" Nullable="false" />
+          <Property Name="IdDiscipline" Type="int" Nullable="false" />
+          <Property Name="Evaluation" Type="int" Nullable="false" />
+          <Property Name="IdNameGroup" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NameGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Special">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="IdSpecial" Type="int" Nullable="false" />
+          <Property Name="IdYearAdd" Type="int" Nullable="false" />
+          <Property Name="IdFromTime" Type="int" Nullable="false" />
+          <Property Name="IdNameGroup" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -22,6 +71,14 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="IdDiscipline" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
@@ -31,6 +88,109 @@
           <Property Name="Password" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="IdRole" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="YearAdd">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Year" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK_Journal_Discipline">
+          <End Role="Discipline" Type="Self.Discipline" Multiplicity="1" />
+          <End Role="Journal" Type="Self.Journal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Discipline">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Journal">
+              <PropertyRef Name="IdDiscipline" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Journal_NameGroup">
+          <End Role="NameGroup" Type="Self.NameGroup" Multiplicity="1" />
+          <End Role="Journal" Type="Self.Journal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NameGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Journal">
+              <PropertyRef Name="IdNameGroup" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Journal_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="Journal" Type="Self.Journal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Journal">
+              <PropertyRef Name="IdStudent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_FormTime">
+          <End Role="FormTime" Type="Self.FormTime" Multiplicity="1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormTime">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="IdFromTime" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_NameGroup">
+          <End Role="NameGroup" Type="Self.NameGroup" Multiplicity="1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NameGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="IdNameGroup" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_Special">
+          <End Role="Special" Type="Self.Special" Multiplicity="1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Special">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="IdSpecial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_YearAdd">
+          <End Role="YearAdd" Type="Self.YearAdd" Multiplicity="1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="YearAdd">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="IdYearAdd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Teacher_Discipline">
+          <End Role="Discipline" Type="Self.Discipline" Multiplicity="1" />
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Discipline">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Teacher">
+              <PropertyRef Name="IdDiscipline" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_Role">
           <End Role="Role" Type="Self.Role" Multiplicity="1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
@@ -68,9 +228,49 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="Хранилище AppWpfNetk33ModelContainer">
+          <EntitySet Name="Discipline" EntityType="Self.Discipline" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FormTime" EntityType="Self.FormTime" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Journal" EntityType="Self.Journal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NameGroup" EntityType="Self.NameGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Special" EntityType="Self.Special" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="YearAdd" EntityType="Self.YearAdd" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Journal_Discipline" Association="Self.FK_Journal_Discipline">
+            <End Role="Discipline" EntitySet="Discipline" />
+            <End Role="Journal" EntitySet="Journal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Journal_NameGroup" Association="Self.FK_Journal_NameGroup">
+            <End Role="NameGroup" EntitySet="NameGroup" />
+            <End Role="Journal" EntitySet="Journal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Journal_Student" Association="Self.FK_Journal_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Journal" EntitySet="Journal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_FormTime" Association="Self.FK_Student_FormTime">
+            <End Role="FormTime" EntitySet="FormTime" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_NameGroup" Association="Self.FK_Student_NameGroup">
+            <End Role="NameGroup" EntitySet="NameGroup" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_Special" Association="Self.FK_Student_Special">
+            <End Role="Special" EntitySet="Special" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_YearAdd" Association="Self.FK_Student_YearAdd">
+            <End Role="YearAdd" EntitySet="YearAdd" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Teacher_Discipline" Association="Self.FK_Teacher_Discipline">
+            <End Role="Discipline" EntitySet="Discipline" />
+            <End Role="Teacher" EntitySet="Teacher" />
+          </AssociationSet>
           <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
             <End Role="Role" EntitySet="Role" />
             <End Role="User" EntitySet="User" />
@@ -84,8 +284,7 @@
             <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AppWpfNetk33Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -173,7 +372,223 @@
             <End Role="Role" EntitySet="Role" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
+          <EntitySet Name="Discipline" EntityType="AppWpfNetk33Model.Discipline" />
+          <EntitySet Name="FormTime" EntityType="AppWpfNetk33Model.FormTime" />
+          <EntitySet Name="Journal" EntityType="AppWpfNetk33Model.Journal" />
+          <EntitySet Name="NameGroup" EntityType="AppWpfNetk33Model.NameGroup" />
+          <EntitySet Name="Special" EntityType="AppWpfNetk33Model.Special" />
+          <EntitySet Name="Student" EntityType="AppWpfNetk33Model.Student" />
+          <EntitySet Name="Teacher" EntityType="AppWpfNetk33Model.Teacher" />
+          <EntitySet Name="YearAdd" EntityType="AppWpfNetk33Model.YearAdd" />
+          <AssociationSet Name="FK_Journal_Discipline" Association="AppWpfNetk33Model.FK_Journal_Discipline">
+            <End Role="Discipline" EntitySet="Discipline" />
+            <End Role="Journal" EntitySet="Journal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Teacher_Discipline" Association="AppWpfNetk33Model.FK_Teacher_Discipline">
+            <End Role="Discipline" EntitySet="Discipline" />
+            <End Role="Teacher" EntitySet="Teacher" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_FormTime" Association="AppWpfNetk33Model.FK_Student_FormTime">
+            <End Role="FormTime" EntitySet="FormTime" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Journal_NameGroup" Association="AppWpfNetk33Model.FK_Journal_NameGroup">
+            <End Role="NameGroup" EntitySet="NameGroup" />
+            <End Role="Journal" EntitySet="Journal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Journal_Student" Association="AppWpfNetk33Model.FK_Journal_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Journal" EntitySet="Journal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_NameGroup" Association="AppWpfNetk33Model.FK_Student_NameGroup">
+            <End Role="NameGroup" EntitySet="NameGroup" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_Special" Association="AppWpfNetk33Model.FK_Student_Special">
+            <End Role="Special" EntitySet="Special" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_YearAdd" Association="AppWpfNetk33Model.FK_Student_YearAdd">
+            <End Role="YearAdd" EntitySet="YearAdd" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Discipline">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Journal" Relationship="AppWpfNetk33Model.FK_Journal_Discipline" FromRole="Discipline" ToRole="Journal" />
+          <NavigationProperty Name="Teacher" Relationship="AppWpfNetk33Model.FK_Teacher_Discipline" FromRole="Discipline" ToRole="Teacher" />
+        </EntityType>
+        <EntityType Name="FormTime">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Student" Relationship="AppWpfNetk33Model.FK_Student_FormTime" FromRole="FormTime" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Journal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdStudent" Type="Int32" Nullable="false" />
+          <Property Name="IdDiscipline" Type="Int32" Nullable="false" />
+          <Property Name="Evaluation" Type="Int32" Nullable="false" />
+          <Property Name="IdNameGroup" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Discipline" Relationship="AppWpfNetk33Model.FK_Journal_Discipline" FromRole="Journal" ToRole="Discipline" />
+          <NavigationProperty Name="NameGroup" Relationship="AppWpfNetk33Model.FK_Journal_NameGroup" FromRole="Journal" ToRole="NameGroup" />
+          <NavigationProperty Name="Student" Relationship="AppWpfNetk33Model.FK_Journal_Student" FromRole="Journal" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="NameGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Journal" Relationship="AppWpfNetk33Model.FK_Journal_NameGroup" FromRole="NameGroup" ToRole="Journal" />
+          <NavigationProperty Name="Student" Relationship="AppWpfNetk33Model.FK_Student_NameGroup" FromRole="NameGroup" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Special">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Student" Relationship="AppWpfNetk33Model.FK_Student_Special" FromRole="Special" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="IdSpecial" Type="Int32" Nullable="false" />
+          <Property Name="IdYearAdd" Type="Int32" Nullable="false" />
+          <Property Name="IdFromTime" Type="Int32" Nullable="false" />
+          <Property Name="IdNameGroup" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FormTime" Relationship="AppWpfNetk33Model.FK_Student_FormTime" FromRole="Student" ToRole="FormTime" />
+          <NavigationProperty Name="Journal" Relationship="AppWpfNetk33Model.FK_Journal_Student" FromRole="Student" ToRole="Journal" />
+          <NavigationProperty Name="NameGroup" Relationship="AppWpfNetk33Model.FK_Student_NameGroup" FromRole="Student" ToRole="NameGroup" />
+          <NavigationProperty Name="Special" Relationship="AppWpfNetk33Model.FK_Student_Special" FromRole="Student" ToRole="Special" />
+          <NavigationProperty Name="YearAdd" Relationship="AppWpfNetk33Model.FK_Student_YearAdd" FromRole="Student" ToRole="YearAdd" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="IdDiscipline" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Discipline" Relationship="AppWpfNetk33Model.FK_Teacher_Discipline" FromRole="Teacher" ToRole="Discipline" />
+        </EntityType>
+        <EntityType Name="YearAdd">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Year" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Student" Relationship="AppWpfNetk33Model.FK_Student_YearAdd" FromRole="YearAdd" ToRole="Student" />
+        </EntityType>
+        <Association Name="FK_Journal_Discipline">
+          <End Type="AppWpfNetk33Model.Discipline" Role="Discipline" Multiplicity="1" />
+          <End Type="AppWpfNetk33Model.Journal" Role="Journal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Discipline">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Journal">
+              <PropertyRef Name="IdDiscipline" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Teacher_Discipline">
+          <End Type="AppWpfNetk33Model.Discipline" Role="Discipline" Multiplicity="1" />
+          <End Type="AppWpfNetk33Model.Teacher" Role="Teacher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Discipline">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Teacher">
+              <PropertyRef Name="IdDiscipline" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_FormTime">
+          <End Type="AppWpfNetk33Model.FormTime" Role="FormTime" Multiplicity="1" />
+          <End Type="AppWpfNetk33Model.Student" Role="Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormTime">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="IdFromTime" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Journal_NameGroup">
+          <End Type="AppWpfNetk33Model.NameGroup" Role="NameGroup" Multiplicity="1" />
+          <End Type="AppWpfNetk33Model.Journal" Role="Journal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NameGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Journal">
+              <PropertyRef Name="IdNameGroup" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Journal_Student">
+          <End Type="AppWpfNetk33Model.Student" Role="Student" Multiplicity="1" />
+          <End Type="AppWpfNetk33Model.Journal" Role="Journal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Journal">
+              <PropertyRef Name="IdStudent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_NameGroup">
+          <End Type="AppWpfNetk33Model.NameGroup" Role="NameGroup" Multiplicity="1" />
+          <End Type="AppWpfNetk33Model.Student" Role="Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NameGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="IdNameGroup" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_Special">
+          <End Type="AppWpfNetk33Model.Special" Role="Special" Multiplicity="1" />
+          <End Type="AppWpfNetk33Model.Student" Role="Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Special">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="IdSpecial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_YearAdd">
+          <End Type="AppWpfNetk33Model.YearAdd" Role="YearAdd" Multiplicity="1" />
+          <End Type="AppWpfNetk33Model.Student" Role="Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="YearAdd">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="IdYearAdd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -206,6 +621,78 @@
                 <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Discipline">
+            <EntityTypeMapping TypeName="AppWpfNetk33Model.Discipline">
+              <MappingFragment StoreEntitySet="Discipline">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FormTime">
+            <EntityTypeMapping TypeName="AppWpfNetk33Model.FormTime">
+              <MappingFragment StoreEntitySet="FormTime">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Journal">
+            <EntityTypeMapping TypeName="AppWpfNetk33Model.Journal">
+              <MappingFragment StoreEntitySet="Journal">
+                <ScalarProperty Name="IdNameGroup" ColumnName="IdNameGroup" />
+                <ScalarProperty Name="Evaluation" ColumnName="Evaluation" />
+                <ScalarProperty Name="IdDiscipline" ColumnName="IdDiscipline" />
+                <ScalarProperty Name="IdStudent" ColumnName="IdStudent" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NameGroup">
+            <EntityTypeMapping TypeName="AppWpfNetk33Model.NameGroup">
+              <MappingFragment StoreEntitySet="NameGroup">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Special">
+            <EntityTypeMapping TypeName="AppWpfNetk33Model.Special">
+              <MappingFragment StoreEntitySet="Special">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Student">
+            <EntityTypeMapping TypeName="AppWpfNetk33Model.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="IdNameGroup" ColumnName="IdNameGroup" />
+                <ScalarProperty Name="IdFromTime" ColumnName="IdFromTime" />
+                <ScalarProperty Name="IdYearAdd" ColumnName="IdYearAdd" />
+                <ScalarProperty Name="IdSpecial" ColumnName="IdSpecial" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teacher">
+            <EntityTypeMapping TypeName="AppWpfNetk33Model.Teacher">
+              <MappingFragment StoreEntitySet="Teacher">
+                <ScalarProperty Name="IdDiscipline" ColumnName="IdDiscipline" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="YearAdd">
+            <EntityTypeMapping TypeName="AppWpfNetk33Model.YearAdd">
+              <MappingFragment StoreEntitySet="YearAdd">
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -28,5 +28,13 @@ namespace WpfApp1.DataFilesApp
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Discipline> Discipline { get; set; }
+        public virtual DbSet<FormTime> FormTime { get; set; }
+        public virtual DbSet<Journal> Journal { get; set; }
+        public virtual DbSet<NameGroup> NameGroup { get; set; }
+        public virtual DbSet<Special> Special { get; set; }
+        public virtual DbSet<Student> Student { get; set; }
+        public virtual DbSet<Teacher> Teacher { get; set; }
+        public virtual DbSet<YearAdd> YearAdd { get; set; }
     }
 }
